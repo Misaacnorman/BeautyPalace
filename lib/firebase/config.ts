@@ -3,6 +3,9 @@ import { getAuth, Auth } from 'firebase/auth'
 import { getFirestore, Firestore } from 'firebase/firestore'
 import { getStorage, FirebaseStorage } from 'firebase/storage'
 
+// Firebase config - uses NEXT_PUBLIC_* variables which are:
+// 1. Set manually in App Hosting environment variables, OR
+// 2. Automatically mapped from FIREBASE_WEBAPP_CONFIG via next.config.js
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,

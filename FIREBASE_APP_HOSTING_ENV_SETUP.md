@@ -1,9 +1,20 @@
 # Firebase App Hosting - Environment Variables Setup
 
-## Problem
-Your `.env.local` file is only for local development and is not deployed to production. Firebase App Hosting needs environment variables configured separately.
+## Important Update
 
-## Solution: Set Environment Variables in Firebase Console
+Firebase App Hosting automatically provides `FIREBASE_CONFIG` and `FIREBASE_WEBAPP_CONFIG` during the build process. However, Next.js requires `NEXT_PUBLIC_*` prefixed variables for client-side access.
+
+**Good News:** The code has been updated to automatically map `FIREBASE_WEBAPP_CONFIG` to `NEXT_PUBLIC_*` variables via `next.config.js`. This means Firebase App Hosting should automatically provide the config!
+
+**However**, if you still see errors, you may need to manually set the `NEXT_PUBLIC_*` variables as a fallback.
+
+## Problem
+Your `.env.local` file is only for local development and is not deployed to production. Firebase App Hosting needs environment variables configured separately (though it may provide them automatically).
+
+## Solution: Check if Auto-Config Works First
+
+1. **Try deploying without setting variables** - Firebase App Hosting may automatically provide the config
+2. **If errors persist**, manually set environment variables in Firebase Console
 
 ### Step 1: Go to App Hosting Backend Settings
 
