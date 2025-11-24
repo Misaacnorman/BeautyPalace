@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Default glittering gold and dark black theme */
+  --primary-color: #000000;
+  --accent-color: #1a1a1a;
+  --neutral-color: #FFD700;
+  --footer-bg: #000000;
+  --border-color: #FFD700;
+  --hover-color: #FFA500;
+  --link-color: #FFD700;
+  
+  /* Derived colors for major elements */
+  --navbar-bg: var(--primary-color);
+  --button-bg: var(--primary-color);
+  --section-bg: var(--accent-color);
+  --card-bg: var(--accent-color);
+  --hero-bg: var(--accent-color);
+  --text-color: var(--neutral-color);
+  --heading-color: var(--neutral-color);
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
