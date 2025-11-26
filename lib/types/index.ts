@@ -47,6 +47,20 @@ export interface Photo {
   createdAt: Date | string
 }
 
+export type MediaType = 'image' | 'video'
+
+export interface MediaItem {
+  id: string
+  type: MediaType
+  url: string
+  thumbnailUrl?: string
+  caption?: string
+  tags: string[]
+  category: GalleryCategory
+  isFeatured: boolean
+  createdAt: Date | string
+}
+
 export interface Service {
   id: string
   name: string
