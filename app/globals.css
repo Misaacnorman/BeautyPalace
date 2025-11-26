@@ -489,16 +489,16 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: var(--accent-color);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #d4af37, #b8860b);
+  background: linear-gradient(180deg, var(--border-color), var(--primary-color));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #ffd700, #d4af37);
+  background: linear-gradient(180deg, var(--link-color), var(--border-color));
 }
 
 /* Focus states for accessibility */

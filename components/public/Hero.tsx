@@ -5,21 +5,23 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { useSettings } from '@/hooks/useSettings'
 
-// Floating particle component
-const FloatingParticle = ({ delay, duration, startX, startY }: { 
+// Floating particle component - sizes and opacity are now passed as props to avoid hydration issues
+const FloatingParticle = ({ delay, duration, startX, startY, size, opacity }: { 
   delay: number; 
   duration: number; 
   startX: number; 
-  startY: number 
+  startY: number;
+  size: number;
+  opacity: number;
 }) => (
   <div
     className="absolute rounded-full opacity-0"
     style={{
-      width: `${Math.random() * 6 + 3}px`,
-      height: `${Math.random() * 6 + 3}px`,
+      width: `${size}px`,
+      height: `${size}px`,
       left: `${startX}%`,
       top: `${startY}%`,
-      background: `radial-gradient(circle, rgba(255, 215, 0, ${Math.random() * 0.5 + 0.3}) 0%, transparent 70%)`,
+      background: `radial-gradient(circle, rgba(255, 215, 0, ${opacity}) 0%, transparent 70%)`,
       animation: `particle-float-${(delay % 3) + 1} ${duration}s ease-in-out infinite`,
       animationDelay: `${delay * 0.5}s`,
     }}
@@ -29,17 +31,19 @@ const FloatingParticle = ({ delay, duration, startX, startY }: {
 export const Hero = () => {
   const { settings } = useSettings()
   const [mounted, setMounted] = useState(false)
-  const [particles, setParticles] = useState<Array<{ id: number; delay: number; duration: number; startX: number; startY: number }>>([])
+  const [particles, setParticles] = useState<Array<{ id: number; delay: number; duration: number; startX: number; startY: number; size: number; opacity: number }>>([])
 
   useEffect(() => {
     setMounted(true)
-    // Generate random particles
+    // Generate random particles - done in useEffect to avoid hydration mismatch
     const newParticles = Array.from({ length: 20 }, (_, i) => ({
       id: i,
       delay: i,
       duration: Math.random() * 6 + 8,
       startX: Math.random() * 100,
       startY: Math.random() * 100,
+      size: Math.random() * 6 + 3,
+      opacity: Math.random() * 0.5 + 0.3,
     }))
     setParticles(newParticles)
   }, [])

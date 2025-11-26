@@ -2,6 +2,10 @@
 
 import React, { useRef, useState } from 'react'
 
+// Constants for 3D hover effect calculations
+const ROTATION_SENSITIVITY = 20 // Higher value = less rotation
+const HOVER_SCALE = 1.02
+
 interface CardProps {
   children: React.ReactNode
   className?: string
@@ -30,10 +34,10 @@ export const Card: React.FC<CardProps> = ({
     const centerX = rect.width / 2
     const centerY = rect.height / 2
     
-    const rotateX = (y - centerY) / 20
-    const rotateY = (centerX - x) / 20
+    const rotateX = (y - centerY) / ROTATION_SENSITIVITY
+    const rotateY = (centerX - x) / ROTATION_SENSITIVITY
     
-    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`)
+    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${HOVER_SCALE}, ${HOVER_SCALE}, ${HOVER_SCALE})`)
     setGlowPosition({ x: (x / rect.width) * 100, y: (y / rect.height) * 100 })
   }
 

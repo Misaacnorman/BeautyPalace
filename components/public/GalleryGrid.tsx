@@ -20,7 +20,8 @@ export const GalleryGrid: React.FC<GalleryGridProps> = ({ photos, loading }) => 
   // Close modal on escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSelectedPhoto(null)
+      // Handle both 'Escape' and 'Esc' for browser compatibility
+      if (e.key === 'Escape' || e.key === 'Esc') setSelectedPhoto(null)
     }
     if (selectedPhoto) {
       document.addEventListener('keydown', handleEscape)
@@ -120,7 +121,12 @@ export const GalleryGrid: React.FC<GalleryGridProps> = ({ photos, loading }) => 
             {/* Bottom content */}
             <div className="absolute bottom-0 left-0 right-0 p-5 space-y-3 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
               {photo.caption && (
-                <p className="text-base font-semibold text-white drop-shadow-lg line-clamp-2">
+                <p className="text-base font-semibold text-white drop-shadow-lg" style={{ 
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                }}>
                   {photo.caption}
                 </p>
               )}
