@@ -9,31 +9,26 @@ const services = [
     id: '1',
     name: 'Bridal Makeup',
     description: 'Complete bridal makeup package',
-    basePrice: 250,
   },
   {
     id: '2',
     name: 'Soft Glam',
     description: 'Natural, elegant makeup look',
-    basePrice: 120,
   },
   {
     id: '3',
     name: 'Photoshoot Makeup',
     description: 'Professional makeup for photography',
-    basePrice: 150,
   },
   {
     id: '4',
-    name: 'Party Glam',
-    description: 'Bold and glamorous makeup look',
-    basePrice: 100,
+    name: 'Full Glam',
+    description: 'High-impact glam for special events including nail henna designs and eyelash application.',
   },
   {
     id: '5',
     name: 'Hair Styling',
     description: 'Professional hair styling services',
-    basePrice: 80,
   },
 ]
 

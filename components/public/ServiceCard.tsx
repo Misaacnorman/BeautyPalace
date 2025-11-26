@@ -25,13 +25,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
       >
         {service.description}
       </p>
-      <div className="flex items-center justify-between">
-        <span 
-          className="text-2xl font-bold"
-          style={{ color: 'var(--primary-color)' }}
-        >
-          ${service.basePrice}
-        </span>
+      <div className="mt-4">
         <Link href={`/booking?service=${encodeURIComponent(service.name)}`}>
           <Button variant="primary" size="sm">
             Book this service

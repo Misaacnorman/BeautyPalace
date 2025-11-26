@@ -16,31 +16,26 @@ const services = [
     id: '1',
     name: 'Bridal Makeup',
     description: 'Complete bridal makeup package for your special day. Includes trial session and touch-up kit.',
-    basePrice: 250,
   },
   {
     id: '2',
     name: 'Soft Glam',
     description: 'Natural, elegant makeup look perfect for everyday events and photoshoots.',
-    basePrice: 120,
   },
   {
     id: '3',
     name: 'Photoshoot Makeup',
     description: 'Professional makeup designed for photography and videography sessions.',
-    basePrice: 150,
   },
   {
     id: '4',
-    name: 'Party Glam',
-    description: 'Bold and glamorous makeup look for parties, events, and special occasions.',
-    basePrice: 100,
+    name: 'Full Glam',
+    description: 'High-impact glam for events with custom nail henna designs and premium eyelash application.',
   },
   {
     id: '5',
     name: 'Hair Styling',
     description: 'Professional hair styling services including updos, curls, and special occasion hairstyles.',
-    basePrice: 80,
   },
 ]
 

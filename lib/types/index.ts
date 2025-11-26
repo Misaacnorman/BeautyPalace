@@ -39,7 +39,6 @@ export interface Service {
   id: string
   name: string
   description: string
-  basePrice: number
 }
 
 export interface Settings {
