@@ -28,24 +28,58 @@ const FloatingParticle = ({ delay, duration, startX, startY, size, opacity }: {
   />
 )
 
+// Gold sparkle/glitter effect
+const GlitterSparkle = ({ delay, x, y, size }: { delay: number; x: number; y: number; size: number }) => (
+  <div
+    className="absolute animate-sparkle"
+    style={{
+      left: `${x}%`,
+      top: `${y}%`,
+      width: `${size}px`,
+      height: `${size}px`,
+      animationDelay: `${delay}s`,
+    }}
+  >
+    {/* 4-point star shape */}
+    <svg viewBox="0 0 24 24" fill="none" className="w-full h-full">
+      <path 
+        d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z" 
+        fill="rgba(255, 215, 0, 0.8)"
+        style={{ filter: 'drop-shadow(0 0 3px rgba(255, 215, 0, 0.8))' }}
+      />
+    </svg>
+  </div>
+)
+
 export const Hero = () => {
   const { settings } = useSettings()
   const [mounted, setMounted] = useState(false)
   const [particles, setParticles] = useState<Array<{ id: number; delay: number; duration: number; startX: number; startY: number; size: number; opacity: number }>>([])
+  const [glitterSparkles, setGlitterSparkles] = useState<Array<{ id: number; delay: number; x: number; y: number; size: number }>>([])
 
   useEffect(() => {
     setMounted(true)
     // Generate random particles - done in useEffect to avoid hydration mismatch
-    const newParticles = Array.from({ length: 20 }, (_, i) => ({
+    const newParticles = Array.from({ length: 25 }, (_, i) => ({
       id: i,
       delay: i,
       duration: Math.random() * 6 + 8,
       startX: Math.random() * 100,
       startY: Math.random() * 100,
-      size: Math.random() * 6 + 3,
-      opacity: Math.random() * 0.5 + 0.3,
+      size: Math.random() * 8 + 4,
+      opacity: Math.random() * 0.6 + 0.3,
     }))
     setParticles(newParticles)
+    
+    // Generate glitter sparkles
+    const newSparkles = Array.from({ length: 15 }, (_, i) => ({
+      id: i,
+      delay: Math.random() * 4,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 12 + 6,
+    }))
+    setGlitterSparkles(newSparkles)
   }, [])
 
   const heroBackground = settings?.accentColor
@@ -91,6 +125,15 @@ export const Hero = () => {
         <div className="particles-container">
           {particles.map((particle) => (
             <FloatingParticle key={particle.id} {...particle} />
+          ))}
+        </div>
+      )}
+
+      {/* Glitter sparkles */}
+      {mounted && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {glitterSparkles.map((sparkle) => (
+            <GlitterSparkle key={sparkle.id} {...sparkle} />
           ))}
         </div>
       )}

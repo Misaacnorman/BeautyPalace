@@ -62,9 +62,9 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
   const icon = serviceIcons[service.name] || defaultIcon
 
   return (
-    <Card className="p-6 h-full flex flex-col relative group">
+    <Card className="p-6 h-full flex flex-col relative group overflow-hidden">
       {/* Decorative corner accent */}
-      <div className="absolute top-0 right-0 w-20 h-20 opacity-10">
+      <div className="absolute top-0 right-0 w-20 h-20 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
         <div 
           className="absolute top-0 right-0 w-full h-full"
           style={{
@@ -74,15 +74,50 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
         />
       </div>
 
+      {/* Sparkle effect on hover */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+        <div 
+          className="absolute top-4 right-4 w-2 h-2 rounded-full animate-sparkle"
+          style={{ 
+            background: 'radial-gradient(circle, rgba(255, 215, 0, 0.8) 0%, transparent 70%)',
+            boxShadow: '0 0 8px rgba(255, 215, 0, 0.6)',
+            animationDelay: '0s',
+          }}
+        />
+        <div 
+          className="absolute top-1/3 left-6 w-1.5 h-1.5 rounded-full animate-sparkle"
+          style={{ 
+            background: 'radial-gradient(circle, rgba(255, 215, 0, 0.8) 0%, transparent 70%)',
+            boxShadow: '0 0 6px rgba(255, 215, 0, 0.6)',
+            animationDelay: '0.3s',
+          }}
+        />
+        <div 
+          className="absolute bottom-12 right-8 w-1 h-1 rounded-full animate-sparkle"
+          style={{ 
+            background: 'radial-gradient(circle, rgba(255, 215, 0, 0.8) 0%, transparent 70%)',
+            boxShadow: '0 0 4px rgba(255, 215, 0, 0.6)',
+            animationDelay: '0.6s',
+          }}
+        />
+      </div>
+
       {/* Icon */}
       <div 
-        className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3"
+        className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 relative"
         style={{ 
           background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.05) 100%)',
           border: '1px solid rgba(212, 175, 55, 0.3)',
           color: 'var(--link-color)',
         }}
       >
+        {/* Icon glow on hover */}
+        <div 
+          className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{
+            boxShadow: '0 0 20px rgba(255, 215, 0, 0.3), inset 0 0 10px rgba(255, 215, 0, 0.1)',
+          }}
+        />
         {icon}
       </div>
 
@@ -100,7 +135,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
         {service.description}
       </p>
       
-      <div className="mt-auto pt-4 border-t border-[var(--border-color)]/20">
+      <div className="mt-auto pt-4 border-t border-[var(--border-color)]/20 group-hover:border-[var(--border-color)]/40 transition-colors duration-300">
         <Link href={`/booking?service=${encodeURIComponent(service.name)}`}>
           <Button variant="primary" size="sm" className="w-full">
             <span>Book this service</span>

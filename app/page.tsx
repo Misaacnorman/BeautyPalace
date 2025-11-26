@@ -10,6 +10,9 @@ import { Button } from '@/components/ui/Button'
 import { useGallery } from '@/hooks/useGallery'
 import { useReviews } from '@/hooks/useReviews'
 import { Rating } from '@/components/ui/Rating'
+import { WhyChooseUs } from '@/components/public/WhyChooseUs'
+import { VideoShowcase } from '@/components/public/VideoShowcase'
+import { GoldSparkles } from '@/components/public/GoldSparkles'
 
 // Mock services data
 const services = [
@@ -195,6 +198,15 @@ export default function Home() {
           </div>
         </AnimatedSection>
       )}
+
+      {/* Video Showcase Section */}
+      <AnimatedSection delay={250}>
+        <GoldSparkles count={15} />
+        <VideoShowcase />
+      </AnimatedSection>
+
+      {/* Why Choose Us Section */}
+      <WhyChooseUs />
 
       {/* Reviews Highlight */}
       {featuredReviews.length > 0 && (
