@@ -507,6 +507,93 @@ html {
   outline-offset: 2px;
 }
 
+/* Enhanced Gold Glitter Effects */
+.gold-glitter-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.gold-glitter-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.15) 0%, transparent 20%),
+    radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.1) 0%, transparent 25%),
+    radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 30%);
+  pointer-events: none;
+}
+
+/* Gold shimmer text effect - enhanced version */
+.gold-shimmer-text {
+  background: linear-gradient(
+    120deg,
+    #fff4c7 0%,
+    #ffd700 20%,
+    #ffbb45 40%,
+    #ffd700 60%,
+    #fff4c7 80%,
+    #ffd700 100%
+  );
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: goldShimmer 4s linear infinite;
+}
+
+@keyframes goldShimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 300% center; }
+}
+
+/* Gold dust particles effect */
+.gold-dust {
+  position: relative;
+}
+
+.gold-dust::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.4) 1px, transparent 1px),
+    radial-gradient(circle at 30% 60%, rgba(255, 215, 0, 0.3) 1px, transparent 1px),
+    radial-gradient(circle at 50% 30%, rgba(255, 215, 0, 0.5) 1px, transparent 1px),
+    radial-gradient(circle at 70% 80%, rgba(255, 215, 0, 0.3) 1px, transparent 1px),
+    radial-gradient(circle at 90% 40%, rgba(255, 215, 0, 0.4) 1px, transparent 1px);
+  animation: dustFloat 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes dustFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+  50% { transform: translateY(-10px) rotate(2deg); opacity: 1; }
+}
+
+/* Video player gold accent styles */
+.video-gold-accent {
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.2), inset 0 0 20px rgba(255, 215, 0, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+/* Premium card glow */
+.premium-glow {
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(212, 175, 55, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: box-shadow 0.5s ease;
+}
+
+.premium-glow:hover {
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(212, 175, 55, 0.4),
+    0 0 40px rgba(255, 215, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
 /* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   *,
