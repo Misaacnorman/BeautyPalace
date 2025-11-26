@@ -26,11 +26,23 @@ export interface Review {
   createdAt: Date | string
 }
 
+export type GalleryCategory =
+  | 'Bridal'
+  | 'Soft Glam'
+  | 'Photoshoot'
+  | 'Full Glam'
+  | 'Hair'
+  | 'Henna'
+  | 'Lashes'
+  | 'Editorial'
+  | 'Behind the Scenes'
+
 export interface Photo {
   id: string
   imageUrl: string
-  caption: string
+  caption?: string
   tags: string[]
+  category: GalleryCategory
   isFeatured: boolean
   createdAt: Date | string
 }

@@ -4,16 +4,25 @@ import { useState, useEffect } from 'react'
 import { getPhotos, createPhoto, updatePhoto, deletePhoto } from '@/lib/firebase/firestore'
 import { Photo } from '@/lib/types'
 
-export const useGallery = (tag?: string, featured?: boolean) => {
+interface GalleryOptions {
+  tag?: string
+  category?: string
+  featured?: boolean
+}
+
+export const useGallery = (options?: GalleryOptions) => {
   const [photos, setPhotos] = useState<Photo[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const tag = options?.tag
+  const category = options?.category
+  const featured = options?.featured
 
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
         setLoading(true)
-        const data = await getPhotos(tag, featured)
+        const data = await getPhotos({ tag, category, featured })
         setPhotos(data)
         setError(null)
       } catch (err) {
@@ -24,13 +33,13 @@ export const useGallery = (tag?: string, featured?: boolean) => {
     }
 
     fetchPhotos()
-  }, [tag, featured])
+  }, [tag, category, featured])
 
   const addPhoto = async (photo: Omit<Photo, 'id' | 'createdAt'>) => {
     try {
       await createPhoto(photo)
       // Refresh photos
-      const data = await getPhotos(tag, featured)
+      const data = await getPhotos({ tag, category, featured })
       setPhotos(data)
       return { success: true }
     } catch (err) {
@@ -42,7 +51,7 @@ export const useGallery = (tag?: string, featured?: boolean) => {
     try {
       await updatePhoto(id, updates)
       // Refresh photos
-      const data = await getPhotos(tag, featured)
+      const data = await getPhotos({ tag, category, featured })
       setPhotos(data)
       return { success: true }
     } catch (err) {
@@ -54,7 +63,7 @@ export const useGallery = (tag?: string, featured?: boolean) => {
     try {
       await deletePhoto(id)
       // Refresh photos
-      const data = await getPhotos(tag, featured)
+      const data = await getPhotos({ tag, category, featured })
       setPhotos(data)
       return { success: true }
     } catch (err) {

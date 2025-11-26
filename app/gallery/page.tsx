@@ -1,68 +1,73 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { GalleryGrid } from '@/components/public/GalleryGrid'
+import { FeaturedCarousel } from '@/components/public/FeaturedCarousel'
 import { useGallery } from '@/hooks/useGallery'
+import { galleryCategories } from '@/lib/constants/gallery'
 
-const tags = ['All', 'Bridal', 'Soft Glam', 'Natural', 'Bold', 'Hair']
+const categoryFilters = ['All', ...galleryCategories]
 
 export default function GalleryPage() {
-  const [selectedTag, setSelectedTag] = useState<string>('All')
-  const { photos, loading } = useGallery(selectedTag === 'All' ? undefined : selectedTag)
+  const [selectedCategory, setSelectedCategory] = useState<string>('All')
+  const { photos, loading } = useGallery()
+
+  const featuredPhotos = useMemo(
+    () => photos.filter((photo) => photo.isFeatured),
+    [photos]
+  )
+
+  const filteredPhotos = useMemo(() => {
+    if (selectedCategory === 'All') return photos
+    return photos.filter((photo) => photo.category === selectedCategory)
+  }, [photos, selectedCategory])
 
   return (
     <div 
-      className="min-h-screen py-12"
+      className="min-h-screen py-12 space-y-16"
       style={{ backgroundColor: 'var(--section-bg)' }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 
-          className="text-4xl md:text-5xl font-bold text-center mb-4"
-          style={{ color: 'var(--heading-color)' }}
-        >
-          Gallery
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+        <p className="text-sm uppercase tracking-[0.35em]" style={{ color: 'var(--link-color)' }}>
+          curated gallery
+        </p>
+        <h1 className="text-4xl md:text-5xl font-bold gold-gradient-text">
+          Immersive Beauty Stories
         </h1>
         <p 
-          className="text-center mb-12 max-w-2xl mx-auto"
+          className="text-lg max-w-3xl mx-auto"
           style={{ color: 'var(--text-color)' }}
         >
-          Explore our portfolio of beautiful makeup and hair styling work
+          Dive into our evolving portfolio. Each look is meticulously captured to showcase texture, colour harmony,
+          and the emotion behind every transformation.
         </p>
+      </div>
 
-        {/* Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {tags.map((tag) => (
+      {featuredPhotos.length > 0 && (
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FeaturedCarousel photos={featuredPhotos} />
+        </div>
+      )}
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <div className="flex flex-wrap justify-center gap-3">
+          {categoryFilters.map((category) => (
             <button
-              key={tag}
-              onClick={() => setSelectedTag(tag)}
-              className={`px-6 py-2 rounded-full font-medium transition-colors ${
-                selectedTag === tag
-                  ? 'text-white'
-                  : 'hover:bg-opacity-20'
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-5 py-2 rounded-full text-sm font-semibold tracking-wide transition-all ${
+                selectedCategory === category
+                  ? 'bg-[var(--primary-color)] text-white shadow-[0_10px_25px_rgba(179,0,45,0.35)]'
+                  : 'bg-white/5 text-[var(--text-color)] hover:bg-white/10'
               }`}
-              style={{
-                backgroundColor: selectedTag === tag ? 'var(--primary-color)' : 'var(--card-bg)',
-                color: selectedTag === tag ? '#ffffff' : 'var(--text-color)',
-              }}
-              onMouseEnter={(e) => {
-                if (selectedTag !== tag) {
-                  e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.1)'
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (selectedTag !== tag) {
-                  e.currentTarget.style.backgroundColor = 'var(--card-bg)'
-                }
-              }}
             >
-              {tag}
+              {category}
             </button>
           ))}
         </div>
 
-        <GalleryGrid photos={photos} loading={loading} />
+        <GalleryGrid photos={filteredPhotos} loading={loading} />
       </div>
     </div>
   )
 }
-

@@ -90,27 +90,42 @@ export const updateReview = async (id: string, updates: Partial<Review>) => {
   await updateDoc(reviewRef, updates)
 }
 
+interface PhotoFilters {
+  tag?: string
+  category?: string
+  featured?: boolean
+}
+
 // Photos
-export const getPhotos = async (tag?: string, featured?: boolean) => {
+export const getPhotos = async (filters?: PhotoFilters) => {
   checkFirebase()
   const photosRef = collection(db!, 'photos')
   const constraints: QueryConstraint[] = [orderBy('createdAt', 'desc')]
   
-  if (tag) {
-    constraints.unshift(where('tags', 'array-contains', tag))
+  if (filters?.tag) {
+    constraints.unshift(where('tags', 'array-contains', filters.tag))
   }
   
-  if (featured) {
+  if (filters?.category && filters.category !== 'All') {
+    constraints.unshift(where('category', '==', filters.category))
+  }
+  
+  if (filters?.featured) {
     constraints.unshift(where('isFeatured', '==', true))
   }
   
   const q = query(photosRef, ...constraints)
   const snapshot = await getDocs(q)
-  return snapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data(),
-    createdAt: doc.data().createdAt?.toDate?.() || doc.data().createdAt,
-  })) as Photo[]
+  return snapshot.docs.map(doc => {
+    const data = doc.data()
+    return {
+      id: doc.id,
+      ...data,
+      tags: Array.isArray(data.tags) ? data.tags : [],
+      category: data.category || 'Editorial',
+      createdAt: data.createdAt?.toDate?.() || data.createdAt,
+    }
+  }) as Photo[]
 }
 
 export const createPhoto = async (photo: Omit<Photo, 'id' | 'createdAt'>) => {

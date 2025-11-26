@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { Hero } from '@/components/public/Hero'
 import { ServiceCard } from '@/components/public/ServiceCard'
-import { GalleryGrid } from '@/components/public/GalleryGrid'
+import { FeaturedCarousel } from '@/components/public/FeaturedCarousel'
 import { ReviewCard } from '@/components/public/ReviewCard'
 import { Button } from '@/components/ui/Button'
 import { useGallery } from '@/hooks/useGallery'
@@ -50,7 +50,7 @@ const services = [
 ]
 
 export default function Home() {
-  const { photos: featuredPhotos, loading: photosLoading } = useGallery(undefined, true)
+  const { photos: featuredPhotos, loading: photosLoading } = useGallery({ featured: true })
   const { reviews, averageRating } = useReviews(true)
 
   const featuredReviews = reviews.slice(0, 2)
@@ -72,8 +72,17 @@ export default function Home() {
             Our Services
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {services.slice(0, 3).map((service) => (
-              <ServiceCard key={service.id} service={service} />
+            {services.slice(0, 3).map((service, index) => (
+              <div
+                key={service.id}
+                className="opacity-0"
+                style={{
+                  animation: 'galleryFadeUp 0.9s ease forwards',
+                  animationDelay: `${index * 120}ms`,
+                }}
+              >
+                <ServiceCard service={service} />
+              </div>
             ))}
           </div>
           <div className="text-center">
@@ -92,15 +101,27 @@ export default function Home() {
           className="py-16"
           style={{ backgroundColor: 'var(--section-bg)' }}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 
-              className="text-3xl md:text-4xl font-bold text-center mb-12"
-              style={{ color: 'var(--heading-color)' }}
-            >
-              Featured Work
-            </h2>
-            <GalleryGrid photos={featuredPhotos.slice(0, 6)} loading={photosLoading} />
-            <div className="text-center mt-8">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+            <div className="text-center space-y-4">
+              <p className="text-sm uppercase tracking-[0.35em]" style={{ color: 'var(--link-color)' }}>
+                spotlight looks
+              </p>
+              <h2 
+                className="text-3xl md:text-4xl font-bold"
+                style={{ color: 'var(--heading-color)' }}
+              >
+                Latest Transformations
+              </h2>
+              <p className="max-w-3xl mx-auto text-base" style={{ color: 'var(--text-color)' }}>
+                A curated carousel of the week&apos;s most loved styles—tap through to feel the motion, then dive into the full gallery.
+              </p>
+            </div>
+            {photosLoading ? (
+              <div className="h-[360px] md:h-[480px] rounded-[32px] border border-[var(--border-color)] bg-gradient-to-r from-white/5 to-transparent animate-pulse" />
+            ) : (
+              <FeaturedCarousel photos={featuredPhotos.slice(0, 6)} />
+            )}
+            <div className="text-center">
               <Link href="/gallery">
                 <Button variant="outline" size="lg">
                   View Full Gallery
