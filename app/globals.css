@@ -5,26 +5,59 @@
 @tailwind utilities;
 
 :root {
-  /* Default glittering gold and dark black theme */
-  --primary-color: #000000;
-  --accent-color: #1a1a1a;
-  --neutral-color: #FFD700;
-  --footer-bg: #000000;
-  --border-color: #FFD700;
-  --hover-color: #FFA500;
-  --link-color: #FFD700;
-  
-  /* Derived colors for major elements */
+  /* Default palette: black canvas + shimmering gold details + red navigation */
+  --primary-color: #b3002d; /* navigation + CTA */
+  --accent-color: #050505; /* section backgrounds */
+  --neutral-color: #ffe9a3; /* shimmering gold text */
+  --footer-bg: #020202;
+  --border-color: #d4af37;
+  --hover-color: #ffdf7f;
+  --link-color: #ffe066;
+  --card-overlay: rgba(255, 255, 255, 0.03);
+  --gold-glow: 0 0 12px rgba(255, 215, 0, 0.45);
+
+  /* Derived theme tokens */
   --navbar-bg: var(--primary-color);
   --button-bg: var(--primary-color);
   --section-bg: var(--accent-color);
-  --card-bg: var(--accent-color);
-  --hero-bg: var(--accent-color);
+  --card-bg: var(--card-overlay);
+  --hero-bg: linear-gradient(135deg, #030303 0%, #070707 45%, #1a1a1a 100%);
   --text-color: var(--neutral-color);
   --heading-color: var(--neutral-color);
 }
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #020202;
+  background-image:
+    radial-gradient(circle at top left, rgba(255, 215, 0, 0.08), transparent 45%),
+    radial-gradient(circle at 20% 80%, rgba(255, 140, 0, 0.06), transparent 50%);
+  color: var(--text-color);
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading-color);
+  text-shadow: var(--gold-glow);
+}
+
+p, span, li, label {
+  color: var(--text-color);
+}
+
+a {
+  color: var(--link-color);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--hover-color);
+}
+
+.gold-gradient-text {
+  background-image: linear-gradient(120deg, #fff4c7, #ffd700, #ffbb45);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.35);
 }
 

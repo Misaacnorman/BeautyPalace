@@ -11,13 +11,20 @@ export const Card: React.FC<CardProps> = ({ children, className = '', onClick })
   const interactiveStyles = onClick ? 'cursor-pointer hover:shadow-lg transition-shadow' : ''
   
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Don't trigger card onClick if clicking on form inputs (especially color pickers)
+    if (!onClick) return
     const target = e.target as HTMLElement
-    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT' || target.closest('input[type="color"]')) {
+    if (
+      target.tagName === 'INPUT' ||
+      target.tagName === 'TEXTAREA' ||
+      target.tagName === 'SELECT' ||
+      target.closest('input[type="color"]')
+    ) {
       return
     }
-    onClick?.(e)
+    onClick(e)
   }
+  
+  const clickProps = onClick ? { onClick: handleClick } : {}
   
   return (
     <div
@@ -27,8 +34,10 @@ export const Card: React.FC<CardProps> = ({ children, className = '', onClick })
         borderColor: 'var(--border-color)',
         borderWidth: '1px',
         borderStyle: 'solid',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 15px 35px rgba(0, 0, 0, 0.55)',
       }}
-      onClick={handleClick}
+      {...clickProps}
     >
       {children}
     </div>

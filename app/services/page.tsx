@@ -22,12 +22,22 @@ const services = [
   {
     id: '4',
     name: 'Full Glam',
-    description: 'High-impact glam for luxurious events featuring dramatic eyes, flawless skin, custom nail henna designs, and premium eyelash application so you sparkle from head to fingertips.',
+    description: 'High-impact glam for luxurious events featuring dramatic eyes, flawless skin, and photo-ready finishes that keep you glowing all night.',
   },
   {
     id: '5',
     name: 'Hair Styling',
     description: 'Professional hair styling services including updos, curls, braids, and special occasion hairstyles. Perfect for weddings, parties, and photoshoots.',
+  },
+  {
+    id: '6',
+    name: 'Nail Henna Art',
+    description: 'Intricate nail henna and mehndi artistry tailored to your event theme, with custom patterns that elevate bridal and festive looks.',
+  },
+  {
+    id: '7',
+    name: 'Luxe Lash Enhancements',
+    description: 'Premium eyelash application featuring customizable lengths and fullness for photo-ready eyes that last through every celebration.',
   },
 ]
 
@@ -43,13 +53,13 @@ export default function ServicesPage() {
             className="text-4xl md:text-5xl font-bold mb-4"
             style={{ color: 'var(--heading-color)' }}
           >
-            Services & Pricing
+            Signature Services
           </h1>
           <p 
             className="text-lg max-w-2xl mx-auto"
             style={{ color: 'var(--text-color)' }}
           >
-            Professional beauty services tailored to your needs. All prices are base rates and may vary based on specific requirements.
+            Professional beauty experiences tailored to your needs. Explore our curated offerings and reach out for bespoke packages and availability.
           </p>
         </div>
 

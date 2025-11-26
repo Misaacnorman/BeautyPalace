@@ -7,11 +7,15 @@ import { useSettings } from '@/hooks/useSettings'
 export const Hero = () => {
   const { settings } = useSettings()
 
+  const heroBackground = settings?.accentColor
+    ? `linear-gradient(135deg, ${settings.accentColor} 0%, #050505 55%, #000000 100%)`
+    : (`var(--hero-bg)` as string)
+
   return (
     <section 
       className="relative py-20 md:py-32"
       style={{ 
-        background: `linear-gradient(135deg, var(--hero-bg) 0%, ${settings?.accentColor || '#1a1a1a'} 50%, #000000 100%)`,
+        background: heroBackground,
         position: 'relative',
       }}
     >

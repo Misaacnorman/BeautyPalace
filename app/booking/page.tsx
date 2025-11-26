@@ -23,12 +23,22 @@ const services = [
   {
     id: '4',
     name: 'Full Glam',
-    description: 'High-impact glam for special events including nail henna designs and eyelash application.',
+    description: 'High-impact glam for special events featuring bold eyes and luminous skin.',
   },
   {
     id: '5',
     name: 'Hair Styling',
     description: 'Professional hair styling services',
+  },
+  {
+    id: '6',
+    name: 'Nail Henna Art',
+    description: 'Custom nail henna and mehndi artistry',
+  },
+  {
+    id: '7',
+    name: 'Luxe Lash Enhancements',
+    description: 'Premium eyelash application and styling',
   },
 ]
 

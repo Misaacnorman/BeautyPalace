@@ -32,7 +32,7 @@ export const Button: React.FC<ButtonProps> = ({
   }
   
   const variants = {
-    primary: 'text-white hover:opacity-90 focus:ring-primary-500',
+    primary: 'text-[var(--neutral-color)] hover:opacity-90 focus:ring-primary-500',
     secondary: 'bg-accent-500 text-white hover:bg-accent-600 focus:ring-accent-500',
     outline: 'border-2 bg-transparent focus:ring-primary-500',
   }
