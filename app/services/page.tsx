@@ -32,7 +32,7 @@ const services = [
   {
     id: '6',
     name: 'Henna Artistry',
-    description: 'Custom casual and bridal henna designs that celebrate tradition and personal style (nail henna not offered).',
+    description: 'Custom casual and bridal henna designs that celebrate tradition and personal style.',
   },
   {
     id: '7',

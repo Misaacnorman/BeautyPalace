@@ -44,7 +44,7 @@ const services = [
   {
     id: '6',
     name: 'Henna Artistry',
-    description: 'Custom casual and bridal henna designs that honor tradition—nail henna not offered.',
+    description: 'Custom casual and bridal henna designs that honor tradition and your story.',
   },
   {
     id: '7',
