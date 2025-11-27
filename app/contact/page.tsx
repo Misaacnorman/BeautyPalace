@@ -301,3 +301,6 @@ export default function ContactPage() {
           </Card>
         </div>
       </section>
+    </div>
+  )
+}
