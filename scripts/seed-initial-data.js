@@ -11,7 +11,7 @@ const initialSettings = {
   siteName: 'BeautyPalace',
   tagline: 'Professional beauty and makeup services',
   primaryColor: '#dc2626',
-  heroHeadline: 'Transform Your Beauty',
+  heroHeadline: 'Bringing Your Dream Look to Life',
   heroSubtext: 'Professional makeup and hair styling services for your special moments',
   WhatsAppNumber: '+1234567890', // Update with your number
   phoneNumber: '+1234567890', // Optional

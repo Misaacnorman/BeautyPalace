@@ -168,7 +168,7 @@ export const Hero = () => {
             className={`text-5xl md:text-7xl lg:text-8xl font-bold mb-6 gold-gradient-text ${mounted ? 'animate-scale-in' : 'opacity-0'}`}
             style={{ animationDelay: '0.4s' }}
           >
-            {settings?.heroHeadline || 'Transform Your Beauty'}
+            {settings?.heroHeadline || 'Bringing Your Dream Look to Life'}
           </h1>
           
           <p 
