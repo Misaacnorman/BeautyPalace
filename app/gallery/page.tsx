@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react'
 import { GalleryGrid } from '@/components/public/GalleryGrid'
 import { FeaturedCarousel } from '@/components/public/FeaturedCarousel'
 import { useGallery } from '@/hooks/useGallery'
-import { galleryCategories } from '@/lib/constants/gallery'
+import { galleryCategories, toCategoryKey } from '@/lib/constants/gallery'
 
 const categoryFilters = ['All', ...galleryCategories]
 
@@ -19,7 +19,8 @@ export default function GalleryPage() {
 
   const filteredPhotos = useMemo(() => {
     if (selectedCategory === 'All') return photos
-    return photos.filter((photo) => photo.category === selectedCategory)
+    const categoryKey = toCategoryKey(selectedCategory)
+    return photos.filter((photo) => photo.categoryKey === categoryKey)
   }, [photos, selectedCategory])
 
   return (

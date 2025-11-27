@@ -14,6 +14,7 @@ import {
 } from 'firebase/firestore'
 import { db, isFirebaseConfigured } from './config'
 import { Booking, Review, Photo, Settings } from '@/lib/types'
+import { toCategoryKey } from '@/lib/constants/gallery'
 
 const checkFirebase = () => {
   if (!db || !isFirebaseConfigured()) {
@@ -93,6 +94,7 @@ export const updateReview = async (id: string, updates: Partial<Review>) => {
 interface PhotoFilters {
   tag?: string
   category?: string
+  categoryKey?: string
   featured?: boolean
 }
 
@@ -106,7 +108,9 @@ export const getPhotos = async (filters?: PhotoFilters) => {
     constraints.unshift(where('tags', 'array-contains', filters.tag))
   }
   
-  if (filters?.category && filters.category !== 'All') {
+  if (filters?.categoryKey) {
+    constraints.unshift(where('categoryKey', '==', filters.categoryKey))
+  } else if (filters?.category && filters.category !== 'All') {
     constraints.unshift(where('category', '==', filters.category))
   }
   
@@ -118,11 +122,13 @@ export const getPhotos = async (filters?: PhotoFilters) => {
   const snapshot = await getDocs(q)
   return snapshot.docs.map(doc => {
     const data = doc.data()
+    const categoryLabel = data.category || 'Editorial'
     return {
       id: doc.id,
       ...data,
       tags: Array.isArray(data.tags) ? data.tags : [],
-      category: data.category || 'Editorial',
+      category: categoryLabel,
+      categoryKey: data.categoryKey || toCategoryKey(categoryLabel),
       createdAt: data.createdAt?.toDate?.() || data.createdAt,
     }
   }) as Photo[]
@@ -131,8 +137,10 @@ export const getPhotos = async (filters?: PhotoFilters) => {
 export const createPhoto = async (photo: Omit<Photo, 'id' | 'createdAt'>) => {
   checkFirebase()
   const photosRef = collection(db!, 'photos')
+  const categoryKey = photo.categoryKey || toCategoryKey(photo.category)
   return await addDoc(photosRef, {
     ...photo,
+    categoryKey,
     createdAt: Timestamp.now(),
   })
 }
@@ -140,7 +148,13 @@ export const createPhoto = async (photo: Omit<Photo, 'id' | 'createdAt'>) => {
 export const updatePhoto = async (id: string, updates: Partial<Photo>) => {
   checkFirebase()
   const photoRef = doc(db!, 'photos', id)
-  await updateDoc(photoRef, updates)
+  const payload = {
+    ...updates,
+  }
+  if (updates.category) {
+    payload.categoryKey = toCategoryKey(updates.category)
+  }
+  await updateDoc(photoRef, payload)
 }
 
 export const deletePhoto = async (id: string) => {

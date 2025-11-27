@@ -43,6 +43,7 @@ export interface Photo {
   caption?: string
   tags: string[]
   category: GalleryCategory
+  categoryKey: string
   isFeatured: boolean
   createdAt: Date | string
 }
@@ -57,6 +58,7 @@ export interface MediaItem {
   caption?: string
   tags: string[]
   category: GalleryCategory
+  categoryKey: string
   isFeatured: boolean
   createdAt: Date | string
 }

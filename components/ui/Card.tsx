@@ -1,48 +1,28 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
-
-// Constants for 3D hover effect calculations
-const ROTATION_SENSITIVITY = 20 // Higher value = less rotation
-const HOVER_SCALE = 1.02
+import React, { useState } from 'react'
 
 interface CardProps {
   children: React.ReactNode
   className?: string
   onClick?: (e?: React.MouseEvent<HTMLDivElement>) => void
-  hover3D?: boolean
-  glowOnHover?: boolean
 }
 
 export const Card: React.FC<CardProps> = ({ 
   children, 
   className = '', 
   onClick,
-  hover3D = true,
-  glowOnHover = true,
 }) => {
-  const cardRef = useRef<HTMLDivElement>(null)
-  const [transform, setTransform] = useState('')
   const [glowPosition, setGlowPosition] = useState({ x: 50, y: 50 })
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!hover3D || !cardRef.current) return
-    
-    const rect = cardRef.current.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    const centerX = rect.width / 2
-    const centerY = rect.height / 2
-    
-    const rotateX = (y - centerY) / ROTATION_SENSITIVITY
-    const rotateY = (centerX - x) / ROTATION_SENSITIVITY
-    
-    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${HOVER_SCALE}, ${HOVER_SCALE}, ${HOVER_SCALE})`)
-    setGlowPosition({ x: (x / rect.width) * 100, y: (y / rect.height) * 100 })
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = ((e.clientX - rect.left) / rect.width) * 100
+    const y = ((e.clientY - rect.top) / rect.height) * 100
+    setGlowPosition({ x, y })
   }
 
   const handleMouseLeave = () => {
-    setTransform('')
     setGlowPosition({ x: 50, y: 50 })
   }
 
@@ -67,7 +47,8 @@ export const Card: React.FC<CardProps> = ({
   
   return (
     <div
-      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       className={`${baseStyles} ${interactiveStyles} ${className} group`}
       style={{ 
         backgroundColor: 'var(--card-bg)',
@@ -77,22 +58,16 @@ export const Card: React.FC<CardProps> = ({
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
         boxShadow: '0 15px 35px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(212, 175, 55, 0.1)',
-        transform: transform || undefined,
-        transformStyle: 'preserve-3d',
       }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
       {...clickProps}
     >
       {/* Glow effect on hover */}
-      {glowOnHover && (
-        <div 
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{
-            background: `radial-gradient(600px circle at ${glowPosition.x}% ${glowPosition.y}%, rgba(255, 215, 0, 0.1), transparent 40%)`,
-          }}
-        />
-      )}
+      <div 
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background: `radial-gradient(600px circle at ${glowPosition.x}% ${glowPosition.y}%, rgba(255, 215, 0, 0.1), transparent 40%)`,
+        }}
+      />
       
       {/* Shimmer effect */}
       <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none">

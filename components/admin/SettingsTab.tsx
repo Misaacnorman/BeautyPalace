@@ -20,6 +20,7 @@ const defaultColors = {
   linkColor: '#FFD700', // Glittering gold - Links
 }
 
+
 export const SettingsTab = () => {
   const { settings, loading, update } = useSettings()
   const [formData, setFormData] = useState({

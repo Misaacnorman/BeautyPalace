@@ -8,7 +8,7 @@ import { Card } from '@/components/ui/Card'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { Photo, GalleryCategory } from '@/lib/types'
-import { galleryCategories } from '@/lib/constants/gallery'
+import { galleryCategories, toCategoryKey } from '@/lib/constants/gallery'
 
 const availableTags = ['Bridal', 'Soft Glam', 'Full Glam', 'Photoshoot', 'Hair', 'Henna', 'Lashes', 'Editorial']
 
@@ -77,6 +77,7 @@ export const GalleryTab = () => {
         tags: newTags,
         isFeatured: newIsFeatured,
         category: newCategory,
+        categoryKey: toCategoryKey(newCategory),
       })
       resetNewPhotoForm()
     } catch (error) {
@@ -91,12 +92,18 @@ export const GalleryTab = () => {
     setCaption(photo.caption || '')
     setTags(photo.tags || [])
     setIsFeatured(photo.isFeatured)
-    setEditCategory((photo.category as GalleryCategory) || galleryCategories[0])
+    setEditCategory(photo.category || galleryCategories[0])
   }
 
   const handleSaveEdit = async () => {
     if (!editingPhoto?.id) return
-    await editPhoto(editingPhoto.id, { caption, tags, isFeatured, category: editCategory })
+    await editPhoto(editingPhoto.id, { 
+      caption, 
+      tags, 
+      isFeatured, 
+      category: editCategory,
+      categoryKey: toCategoryKey(editCategory),
+    })
     setEditingPhoto(null)
     setCaption('')
     setTags([])
@@ -212,7 +219,10 @@ export const GalleryTab = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {photos.map((photo) => (
-            <Card key={photo.id} className="p-4">
+            <Card
+              key={photo.id}
+              className="p-4"
+            >
               <div className="relative aspect-square mb-4 rounded-lg overflow-hidden">
                 <Image
                   src={photo.imageUrl}

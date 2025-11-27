@@ -19,12 +19,12 @@ const services = [
   {
     id: '1',
     name: 'Bridal Makeup',
-    description: 'Complete bridal makeup package for your special day. Includes trial session and touch-up kit.',
+    description: 'Complete bridal beauty journey with a trial scheduled after advance payment so every detail is perfected.',
   },
   {
     id: '2',
     name: 'Soft Glam',
-    description: 'Natural, elegant makeup look perfect for everyday events and photoshoots.',
+    description: 'Natural, elegant makeup look perfect for everyday celebrations and intimate events.',
   },
   {
     id: '3',
@@ -39,12 +39,12 @@ const services = [
   {
     id: '5',
     name: 'Hair Styling',
-    description: 'Professional hair styling services including updos, curls, and special occasion hairstyles.',
+    description: 'Professional hair styling crafted for each occasion—bridal, cultural, editorial, or red carpet.',
   },
   {
     id: '6',
-    name: 'Nail Henna Art',
-    description: 'Custom nail henna & mehndi designs that add intricate detail to bridal and festive looks.',
+    name: 'Henna Artistry',
+    description: 'Custom casual and bridal henna designs that honor tradition—nail henna not offered.',
   },
   {
     id: '7',
