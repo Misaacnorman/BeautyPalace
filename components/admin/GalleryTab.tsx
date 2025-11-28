@@ -71,10 +71,12 @@ export const GalleryTab = () => {
     try {
       const path = `photos/${Date.now()}_${newFile.name}`
       const imageUrl = await uploadImage(newFile, path)
+      // Sanitize tags: filter out falsy values and remove duplicates
+      const sanitizedTags = [...new Set(newTags.filter(Boolean))]
       await addPhoto({
         imageUrl,
         caption: newCaption.trim(),
-        tags: newTags,
+        tags: sanitizedTags,
         isFeatured: newIsFeatured,
         category: newCategory,
         categoryKey: toCategoryKey(newCategory),
@@ -97,9 +99,11 @@ export const GalleryTab = () => {
 
   const handleSaveEdit = async () => {
     if (!editingPhoto?.id) return
+    // Sanitize tags: filter out falsy values and remove duplicates
+    const sanitizedTags = [...new Set(tags.filter(Boolean))]
     await editPhoto(editingPhoto.id, { 
       caption, 
-      tags, 
+      tags: sanitizedTags, 
       isFeatured, 
       category: editCategory,
       categoryKey: toCategoryKey(editCategory),
