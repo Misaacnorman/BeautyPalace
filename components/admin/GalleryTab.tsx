@@ -71,10 +71,12 @@ export const GalleryTab = () => {
     try {
       const path = `photos/${Date.now()}_${newFile.name}`
       const imageUrl = await uploadImage(newFile, path)
+      // Sanitize tags: filter falsy values and remove duplicates
+      const sanitizedTags = [...new Set(newTags.filter(Boolean))]
       await addPhoto({
         imageUrl,
         caption: newCaption.trim(),
-        tags: newTags,
+        tags: sanitizedTags,
         isFeatured: newIsFeatured,
         category: newCategory,
         categoryKey: toCategoryKey(newCategory),
